@@ -83,7 +83,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
 
 
-            EditTextPreference corsHostPreference = findPreference("cors_host");
+            EditTextPreference corsHostPreference = findPreference("cors_hostname");
             if (corsHostPreference != null) {
                 corsHostPreference.setOnBindEditTextListener(editText -> editText.setHint("e.g. http://example.com"));            }
 
