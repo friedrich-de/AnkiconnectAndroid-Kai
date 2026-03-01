@@ -102,17 +102,12 @@ public class RouteHandler extends RouterNanoHTTPD.DefaultHandler {
                 .filter(s -> !s.isEmpty())
                 .collect(Collectors.toList());
 
-        // If "*" is in the allowed hosts, allow all origins
         if (normalizedAllowedHosts.contains("*")) {
+            // Since "*" is in the allowed hosts, simply allow all origins
             applyHeaders(rep, "*");
-            return;
-        }
-
-        // Check if the origin matches any of the allowed hosts
-        String normalizedOrigin = normalizeHost(origin);
-        if (normalizedAllowedHosts.contains(normalizedOrigin)) {
+        } else if (normalizedAllowedHosts.contains(normalizeHost(origin))) {
+            // Request is from an origin the user trusts.
             applyHeaders(rep, origin);
-            return;
         }
     }
 
