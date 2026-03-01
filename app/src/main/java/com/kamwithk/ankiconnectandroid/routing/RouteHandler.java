@@ -98,7 +98,6 @@ public class RouteHandler extends RouterNanoHTTPD.DefaultHandler {
         if (origin == null) {
             origin = headers.get("Origin");
         }
-        String normalizedOrigin = normalizeHost(origin);
 
         String[] allowedHosts = corsHostsString.split("\\r?\\n");
         List<String> normalizedAllowedHosts = Arrays.stream(allowedHosts)
@@ -114,6 +113,7 @@ public class RouteHandler extends RouterNanoHTTPD.DefaultHandler {
         }
 
         // Check if the origin matches any of the allowed hosts
+        String normalizedOrigin = normalizeHost(origin);
         if (normalizedAllowedHosts.contains(normalizedOrigin)) {
             rep.addHeader("Access-Control-Allow-Origin", origin);
             rep.addHeader("Access-Control-Allow-Headers", "*");
