@@ -107,22 +107,24 @@ public class RouteHandler extends RouterNanoHTTPD.DefaultHandler {
 
         // If "*" is in the allowed hosts, allow all origins
         if (normalizedAllowedHosts.contains("*")) {
-            rep.addHeader("Access-Control-Allow-Origin", "*");
-            rep.addHeader("Access-Control-Allow-Headers", "*");
+            applyHeaders(rep, "*");
             return;
         }
 
         // Check if the origin matches any of the allowed hosts
         String normalizedOrigin = normalizeHost(origin);
         if (normalizedAllowedHosts.contains(normalizedOrigin)) {
-            rep.addHeader("Access-Control-Allow-Origin", origin);
-            rep.addHeader("Access-Control-Allow-Headers", "*");
+            applyHeaders(rep, origin);
             return;
         }
 
         // Else, allow the first host (to somewhat keep old behavior for backwards compatibility)
         String firstHost = normalizedAllowedHosts.get(0);
-        rep.addHeader("Access-Control-Allow-Origin", firstHost);
+        applyHeaders(rep, firstHost);
+    }
+
+    private void applyHeaders(NanoHTTPD.Response rep, String allowOrigin) {
+        rep.addHeader("Access-Control-Allow-Origin", allowOrigin);
         rep.addHeader("Access-Control-Allow-Headers", "*");
     }
 
