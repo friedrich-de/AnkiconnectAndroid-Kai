@@ -114,10 +114,6 @@ public class RouteHandler extends RouterNanoHTTPD.DefaultHandler {
             applyHeaders(rep, origin);
             return;
         }
-
-        // Else, allow the first host (to somewhat keep old behavior for backwards compatibility)
-        String firstHost = normalizedAllowedHosts.get(0);
-        applyHeaders(rep, firstHost);
     }
 
     private void applyHeaders(NanoHTTPD.Response rep, String allowOrigin) {
