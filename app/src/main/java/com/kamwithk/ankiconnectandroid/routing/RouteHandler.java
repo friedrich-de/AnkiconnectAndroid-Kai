@@ -105,7 +105,7 @@ public class RouteHandler extends RouterNanoHTTPD.DefaultHandler {
         if (normalizedAllowedHosts.contains("*")) {
             // Since "*" is in the allowed hosts, simply allow all origins
             applyHeaders(rep, "*");
-        } else if (normalizedAllowedHosts.contains(normalizeHost(origin))) {
+        } else if (normalizedAllowedHosts.contains(origin)) {
             // Request is from an origin the user trusts.
             applyHeaders(rep, origin);
         }
