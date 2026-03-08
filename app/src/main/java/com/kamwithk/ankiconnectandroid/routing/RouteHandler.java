@@ -96,7 +96,7 @@ public class RouteHandler extends RouterNanoHTTPD.DefaultHandler {
         Map<String, String> headers = session.getHeaders();
         String origin = headers.get("origin");
 
-        String[] allowedHosts = corsHostsString.split("\\r?\\n");
+        String[] allowedHosts = corsHostsString.split("\\n");
         List<String> normalizedAllowedHosts = Arrays.stream(allowedHosts)
                 .map(this::normalizeHost)
                 .filter(s -> !s.isEmpty())
