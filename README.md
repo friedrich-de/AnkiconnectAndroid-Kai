@@ -1,16 +1,16 @@
-# Ankiconnect Android
+# Ankiconnect Android Kai
 
-Ankiconnect Android allows you to utilize the standard Anki mining workflow on Android devices like phones and eReaders.
+Ankiconnect Android Kai allows you to utilize the standard Anki mining workflow on Android devices like phones and eReaders.
 Create Anki cards using [Yomitan](https://yomitan.wiki/) on [Firefox Browser](https://play.google.com/store/apps/details?id=org.mozilla.firefox) and add them straight into your Anki deck!
 Mine on the go in the same way as you mine on your desktop pc.
 Forvo and local audio are now supported!
 
 
-Ankiconnect Android is a from scratch unofficial reimplementation of the [desktop Ankiconnect extension](https://github.com/FooSoft/anki-connect), [desktop Forvo Server extension](https://github.com/jamesnicolas/yomichan-forvo-server) and [desktop Local Audio Server for Yomitan](https://github.com/themoeway/local-audio-yomichan).
+Ankiconnect Android Kai is a from scratch unofficial reimplementation of the [desktop Ankiconnect extension](https://github.com/FooSoft/anki-connect), [desktop Forvo Server extension](https://github.com/jamesnicolas/yomichan-forvo-server) and [desktop Local Audio Server for Yomitan](https://github.com/themoeway/local-audio-yomichan).
 It reimplements the core APIs used by Yomitan to work with [Ankidroid](https://github.com/ankidroid/Anki-Android/).
 
 ## Table of Contents
-- [Ankiconnect Android](#ankiconnect-android)
+- [Ankiconnect Android Kai](#ankiconnect-android-kai)
   - [Table of Contents](#table-of-contents)
   - [Instructions](#instructions)
     - [Additional Instructions: Forvo Audio](#additional-instructions-forvo-audio)
@@ -34,8 +34,8 @@ Here's how to set everything up from scratch (if you've already got Yomitan work
 
 1. Install [Firefox Browser](https://play.google.com/store/apps/details?id=org.mozilla.firefox)
 2. Install [Ankidroid](https://play.google.com/store/apps/details?id=com.ichi2.anki)
-3. Install Ankiconnect Android - Download from the [Releases Section](https://github.com/KamWithK/AnkiconnectAndroid/releases/latest) or from [IzzyOnDroid repo](https://apt.izzysoft.de/fdroid/index/apk/com.kamwithk.ankiconnectandroid)
-4. Start the Ankiconnect Android app, accept the permissions and hit start service
+3. Install Ankiconnect Android Kai - Download from the [Releases Section](https://github.com/friedrich-de/AnkiconnectAndroid-Kai/releases/latest)
+4. Start the Ankiconnect Android Kai app, accept the permissions and hit start service
 5. Install the [Yomitan extension](https://addons.mozilla.org/en-US/firefox/addon/yomitan/) in Firefox Browser
 6. Configure Yomitan general settings
     1. Ensure advanced settings is enabled (button at the bottom right corner)
@@ -90,10 +90,10 @@ The following is a *completely optional* set of instructions for getting the sho
     * This carries all the risks of using a pre-release version! Only download it
         if you know what you are doing.
 
-2. After installing AnkiDroid, you must allow Ankiconnect Android to open apps in the background.
-    * Under Ankiconnect Android, tap on the settings gear at the top right corner.
+2. After installing AnkiDroid, you must allow Ankiconnect Android Kai to open apps in the background.
+    * Under Ankiconnect Android Kai, tap on the settings gear at the top right corner.
     * Tap on the `Access Overlay Permissions` option. This should lead you to Android's settings page.
-    * Activate the switch for `Ankiconnect Android` within this settings page.
+    * Activate the switch for `Ankiconnect Android Kai` within this settings page.
 
 From here, you should be able to use the show card button as normal.
 
@@ -104,7 +104,7 @@ From here, you should be able to use the show card button as normal.
 
 ### Additional Instructions: Local Audio
 The [(desktop) local audio server](https://github.com/themoeway/local-audio-yomichan)
-setup for Yomitan has been ported over to Ankiconnect Android, and can be used similarly.
+setup for Yomitan has been ported over to Ankiconnect Android Kai, and can be used similarly.
 Again, this is *a completely optional* setup that does not need to be done.
 
 General information about the setup, including reasons for and against using the setup,
@@ -141,19 +141,19 @@ can be found within the above link.
 
     * Locate AnkiConnect Android's data folder. By default, it is under:
         ```
-        (phone)/Android/data/com.kamwithk.ankiconnectandroid/files/
+        (phone)/Android/data/com.kamwithk.ankiconnectandroid.kai/files/
         ```
         However, one can verify the location of the folder by going into the settings
         (gear at the top right corner), and tapping on `Print Local Audio Directory`.
         The following output specifies that the folder is indeed in the default position:
         ```
-        /storage/emulated/0/Android/data/com.kamwithk.ankiconnectandroid/files/
+        /storage/emulated/0/Android/data/com.kamwithk.ankiconnectandroid.kai/files/
         ```
       
     * Alternatively locate a different folder. This will require later customisation.
 
     * After locating the two folders, copy `android.db` from the desktop's add-on folder
-        into Ankiconnect Android's data folder.
+        into Ankiconnect Android Kai's data folder.
         * If you have a previous `android.db`, please delete this file and any related files (i.e. delete `android.db-shm` and `android.db-wa`)
         * Ensure AnkiConnectAndroid is fully closed before copying the database, because
             AnkiConnectAndroid may override the new database if it is open.
@@ -161,15 +161,15 @@ can be found within the above link.
         * Do NOT copy the entire `user_files` folder.
         * After copying the file, this should result in the following:
             ```
-            /storage/emulated/0/Android/data/com.kamwithk.ankiconnectandroid/files/android.db
+            /storage/emulated/0/Android/data/com.kamwithk.ankiconnectandroid.kai/files/android.db
             ```
     * If you chose a different folder than the default, additional customisation is necessary on the settings page.
         * Locate the `Local Audio Settings` section
         * If you selected a different storage device such as an external SD card, you may need to update the `Choose Local Audio Storage Device` option. 
           * The first option will always be the internal storage. If you think you have more than one storage device, it may be that android treats it as one, in which case there will only be one option.
         * If you selected a different directory such as `Documents`, `Audio` etc, you may need to update the `Choose Local Audio Directory` setting.
-          * If you selected a user-owned directory like the aforementioned `Documents`, `Audio` and similar, you may also need to allow `Manage All Files` permission for Ankiconnect Android.
-          * The `Manage All Files` permission is only necessary for folders outside of the app-owned `/Android/data/com.kamwithk.ankiconnectandroid/` directory.
+          * If you selected a user-owned directory like the aforementioned `Documents`, `Audio` and similar, you may also need to allow `Manage All Files` permission for Ankiconnect Android Kai.
+          * The `Manage All Files` permission is only necessary for folders outside of the app-owned `/Android/data/com.kamwithk.ankiconnectandroid.kai/` directory.
         * If you make a mistake you can always reset the settings using `Reset Local Audio settings`. This will reset all the local audio settings and revert it to the default.
 
 4. Setup local audio on Firefox Browser's Yomitan. (Warning: this URL is different than the one on desktop!)
@@ -205,12 +205,12 @@ can be found within the above link.
 ### First Steps
 If you are having issues with anything, such as Yomitan being unable to connect to AnkiDroid, please ensure all these steps are followed before continuing:
 
-* Make sure the latest [app release](https://github.com/KamWithK/AnkiconnectAndroid/releases/latest) is installed.
+* Make sure the latest [app release](https://github.com/friedrich-de/AnkiconnectAndroid-Kai/releases/latest) is installed.
 * If you imported the settings from the PC, try to use the sanitized version upon import, and manually re-add the handlebars after.
 * Double check that your Yomitan settings are correct. In particular, check that the `Configure Anki card format...` section, and the audio sources section is correct.
     * On rare occasions, settings exported from the computer and imported into your Android device may not work. Instead, try to reset Yomitan's settings and redo everything from scratch.
-* Battery saving/automatic optimisation is turned off for Ankidroid, Ankiconnect Android and optionally (but recommended) Firefox browser.
-* You allowed Ankiconnect Android to be running in the background (if this option is available on your device).
+* Battery saving/automatic optimisation is turned off for Ankidroid, Ankiconnect Android Kai and optionally (but recommended) Firefox browser.
+* You allowed Ankiconnect Android Kai to be running in the background (if this option is available on your device).
 
 
 ### Problem: The Yomitan popup appears upon scrolling
@@ -275,7 +275,7 @@ If you've gone through the instructions and are still having trouble, feel free 
 
 
 ## Limitations
-Because Ankiconnect Android is a small project with a limited scope, not all API queries/cases are implemented/considered.
+Because Ankiconnect Android Kai is a small project with a limited scope, not all API queries/cases are implemented/considered.
 Currently every known essential feature has been added into the app, however some niche edge cases have been ignored.
 
 Some examples:
@@ -289,7 +289,7 @@ Some examples:
 For developers who are interested in using the API, please see [docs/api.md](./docs/api.md) for a list of all supported API calls.
 
 ## Contributing
-The primary goal of Ankiconnect Android was to support card creation with Yomitan.
+The primary goal of Ankiconnect Android Kai was to support card creation with Yomitan.
 Therefore, many API calls are not implemented.
 In the spirit of
 [Anki-Connect itself](https://github.com/FooSoft/anki-connect#hey-could-you-add-a-new-action-to-support-feature),

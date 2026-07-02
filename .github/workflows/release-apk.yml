@@ -48,10 +48,10 @@ jobs:
               exit 1
             fi
 
-            key_password="${ANDROID_KEY_PASSWORD:-$ANDROID_KEYSTORE_PASSWORD}"
+            export ANDROID_KEY_PASSWORD_EFFECTIVE="${ANDROID_KEY_PASSWORD:-$ANDROID_KEYSTORE_PASSWORD}"
             keystore_path="${RUNNER_TEMP}/release-key.jks"
             aligned_apk="${RUNNER_TEMP}/app-release-aligned.apk"
-            signed_apk="release/ankiconnect_android_${asset_tag}.apk"
+            signed_apk="release/ankiconnect_android_kai_${asset_tag}.apk"
             zipalign="$(find "${ANDROID_HOME}/build-tools" -name zipalign | sort | tail -1)"
             apksigner="$(find "${ANDROID_HOME}/build-tools" -name apksigner | sort | tail -1)"
 
@@ -60,14 +60,14 @@ jobs:
             "${apksigner}" sign \
               --ks "${keystore_path}" \
               --ks-key-alias "${ANDROID_KEY_ALIAS}" \
-              --ks-pass "pass:${ANDROID_KEYSTORE_PASSWORD}" \
-              --key-pass "pass:${key_password}" \
+              --ks-pass env:ANDROID_KEYSTORE_PASSWORD \
+              --key-pass env:ANDROID_KEY_PASSWORD_EFFECTIVE \
               --out "${signed_apk}" \
               "${aligned_apk}"
             "${apksigner}" verify --verbose "${signed_apk}"
           else
             echo "No Android signing secrets configured; publishing unsigned release APK."
-            cp "${unsigned_apk}" "release/ankiconnect_android_${asset_tag}_unsigned.apk"
+            cp "${unsigned_apk}" "release/ankiconnect_android_kai_${asset_tag}_unsigned.apk"
           fi
 
       - name: Create GitHub release

@@ -68,7 +68,7 @@ public class RouteHandler extends RouterNanoHTTPD.DefaultHandler {
         Map<String, List<String>> parameters = session.getParameters();
         if (parameters == null || parameters.isEmpty() && files.get("postData") == null) {
             // No data was provided in the POST request so we return a simple response
-            NanoHTTPD.Response rep = newFixedLengthResponse("Ankiconnect Android is running.");
+            NanoHTTPD.Response rep = newFixedLengthResponse("Ankiconnect Android Kai is running.");
             addCorsHeaders(context, rep, session);
             return rep;
         }

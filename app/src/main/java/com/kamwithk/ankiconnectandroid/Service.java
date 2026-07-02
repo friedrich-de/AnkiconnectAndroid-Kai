@@ -43,7 +43,7 @@ public class Service extends android.app.Service {
         }
 
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("Ankiconnect Android")
+                .setContentTitle(getString(R.string.app_name))
                 .setSmallIcon(R.mipmap.app_launcher)
                 .setContentIntent(pendingIntent)
                 .setOngoing(true)

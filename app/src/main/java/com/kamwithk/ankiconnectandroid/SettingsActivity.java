@@ -54,7 +54,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
 
-        private static final String DEFAULT_DIRECTORY_PATH = "/Android/data/com.kamwithk.ankiconnectandroid/files";
+        private static final String DEFAULT_DIRECTORY_PATH = "/Android/data/" + BuildConfig.APPLICATION_ID + "/files";
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);

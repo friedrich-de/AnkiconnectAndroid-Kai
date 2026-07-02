@@ -6,5 +6,5 @@ dependencyResolutionManagement {
         maven { url "https://jitpack.io" }
     }
 }
-rootProject.name = "Ankiconnect Android"
+rootProject.name = "Ankiconnect Android Kai"
 include ':app'

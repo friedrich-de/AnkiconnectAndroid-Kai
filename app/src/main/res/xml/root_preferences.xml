@@ -46,7 +46,7 @@
                 app:key="storage_dir_path"
                 app:title="@string/settings_preferred_storage_dir_path_title"
                 app:summary="@string/settings_preferred_storage_dir_path_summary"
-                app:defaultValue="/Android/data/com.kamwithk.ankiconnectandroid/files"/>
+                app:defaultValue="/Android/data/com.kamwithk.ankiconnectandroid.kai/files"/>
         <Preference
                 app:iconSpaceReserved="false"
                 app:key="reset_storage_settings"
