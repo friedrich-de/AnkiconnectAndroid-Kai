@@ -1,0 +1,57 @@
+{
+  "name": "Ankiconnect Android",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "..",
+    "args": {
+      "ANDROID_COMMANDLINE_TOOLS_VERSION": "14742923",
+      "ANDROID_PLATFORM": "android-33",
+      "ANDROID_BUILD_TOOLS_VERSION": "35.0.0"
+    }
+  },
+  "remoteUser": "vscode",
+  "containerUser": "vscode",
+  "updateRemoteUserUID": true,
+  "runArgs": [
+    "--userns=keep-id"
+  ],
+  "containerEnv": {
+    "ANDROID_HOME": "/opt/android-sdk",
+    "ANDROID_SDK_ROOT": "/opt/android-sdk",
+    "CODEX_HOME": "/home/vscode/.codex",
+    "CODEX_SQLITE_HOME": "/home/vscode/.codex-sqlite"
+  },
+  "remoteEnv": {
+    "ANDROID_HOME": "/opt/android-sdk",
+    "ANDROID_SDK_ROOT": "/opt/android-sdk",
+    "CODEX_HOME": "/home/vscode/.codex",
+    "CODEX_SQLITE_HOME": "/home/vscode/.codex-sqlite",
+    "PATH": "${containerEnv:PATH}:/opt/android-sdk/cmdline-tools/latest/bin:/opt/android-sdk/platform-tools:/opt/android-sdk/build-tools/35.0.0"
+  },
+  "mounts": [
+    "source=${localEnv:USERPROFILE}/.codex,target=/home/vscode/.codex,type=bind",
+    "source=ankiconnect-android-codex-sqlite,target=/home/vscode/.codex-sqlite,type=volume",
+    "source=ankiconnect-android-gradle-cache,target=/home/vscode/.gradle,type=volume"
+  ],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "adelphes.android-dev-ext",
+        "ms-azuretools.vscode-containers",
+        "openai.chatgpt",
+        "redhat.vscode-xml",
+        "vscjava.vscode-gradle",
+        "vscjava.vscode-java-pack"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "files.eol": "\n",
+        "gradle.nestedProjects": false,
+        "gradle.wrapper.enabled": true,
+        "java.import.gradle.enabled": true,
+        "java.import.gradle.wrapper.enabled": true
+      }
+    }
+  },
+  "postCreateCommand": "bash .devcontainer/post-create.sh"
+}
