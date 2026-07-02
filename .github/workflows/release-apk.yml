@@ -1,0 +1,88 @@
+name: Release APK
+
+on:
+  push:
+    tags:
+      - '*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-release:
+    name: Build and publish APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build release APK
+        run: ./gradlew clean assembleRelease
+
+      - name: Prepare release asset
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          set -euo pipefail
+          tag="${GITHUB_REF_NAME}"
+          asset_tag="${tag//./_}"
+          unsigned_apk="app/build/outputs/apk/release/app-release-unsigned.apk"
+          mkdir -p release
+
+          if [[ -n "${ANDROID_KEYSTORE_BASE64}" || -n "${ANDROID_KEYSTORE_PASSWORD}" || -n "${ANDROID_KEY_ALIAS}" || -n "${ANDROID_KEY_PASSWORD}" ]]; then
+            if [[ -z "${ANDROID_KEYSTORE_BASE64}" || -z "${ANDROID_KEYSTORE_PASSWORD}" || -z "${ANDROID_KEY_ALIAS}" ]]; then
+              echo "ANDROID_KEYSTORE_BASE64, ANDROID_KEYSTORE_PASSWORD, and ANDROID_KEY_ALIAS are required for signing." >&2
+              exit 1
+            fi
+
+            key_password="${ANDROID_KEY_PASSWORD:-$ANDROID_KEYSTORE_PASSWORD}"
+            keystore_path="${RUNNER_TEMP}/release-key.jks"
+            aligned_apk="${RUNNER_TEMP}/app-release-aligned.apk"
+            signed_apk="release/ankiconnect_android_${asset_tag}.apk"
+            zipalign="$(find "${ANDROID_HOME}/build-tools" -name zipalign | sort | tail -1)"
+            apksigner="$(find "${ANDROID_HOME}/build-tools" -name apksigner | sort | tail -1)"
+
+            echo "${ANDROID_KEYSTORE_BASE64}" | base64 --decode > "${keystore_path}"
+            "${zipalign}" -p -f 4 "${unsigned_apk}" "${aligned_apk}"
+            "${apksigner}" sign \
+              --ks "${keystore_path}" \
+              --ks-key-alias "${ANDROID_KEY_ALIAS}" \
+              --ks-pass "pass:${ANDROID_KEYSTORE_PASSWORD}" \
+              --key-pass "pass:${key_password}" \
+              --out "${signed_apk}" \
+              "${aligned_apk}"
+            "${apksigner}" verify --verbose "${signed_apk}"
+          else
+            echo "No Android signing secrets configured; publishing unsigned release APK."
+            cp "${unsigned_apk}" "release/ankiconnect_android_${asset_tag}_unsigned.apk"
+          fi
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          if gh release view "${GITHUB_REF_NAME}" --repo "${GITHUB_REPOSITORY}" >/dev/null 2>&1; then
+            gh release upload "${GITHUB_REF_NAME}" release/*.apk \
+              --repo "${GITHUB_REPOSITORY}" \
+              --clobber
+          else
+            gh release create "${GITHUB_REF_NAME}" release/*.apk \
+              --repo "${GITHUB_REPOSITORY}" \
+              --title "${GITHUB_REF_NAME}" \
+              --notes "Automated APK build for ${GITHUB_REF_NAME}" \
+              --verify-tag
+          fi
